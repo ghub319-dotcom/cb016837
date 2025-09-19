@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GreenBite — Recipes</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.png">
+</head>
+<body>
+  <header class="nav-wrap">
+    <div class="logo">GreenBite</div>
+    <nav id="nav"><a href="index.html">Home</a><a href="recipes.html" class="active">Recipes</a><a href="calculator.html">Calculator</a><a href="workouts.html">Workouts</a><a href="mindfulness.html">Mindfulness</a><a href="contact.html">Contact</a></nav>
+    <button id="hamburger2" class="hamburger">☰</button>
+  </header>
+
+  <main class="container">
+    <h1>Healthy Recipes</h1>
+    <div class="controls">
+      <input id="search" placeholder="Search by name...">
+      <select id="filter-cat">
+        <option value="">All</option>
+      </select>
+    </div>
+    <div id="recipes-grid" class="grid"></div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal hidden" role="dialog" aria-hidden="true">
+      <div class="modal-content">
+        <button id="modal-close" class="close">✕</button>
+        <h2 id="modal-title"></h2>
+        <img id="modal-img" src="" alt="" style="max-width:100%;border-radius:8px">
+        <h3>Ingredients</h3>
+        <ul id="modal-ingredients"></ul>
+        <h3>Steps</h3>
+        <ol id="modal-steps"></ol>
+        <h3>Nutrition</h3>
+        <table id="modal-nutrition" class="nutrition-table">
+          <thead><tr><th>Nutrient</th><th>Amount</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer>© GreenBite</footer>
+
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script>
+// Populate filter categories
+const catSet = new Set(recipes.map(r=>r.category));
+const filter = document.getElementById('filter-cat');
+[...catSet].forEach(c=>{
+  const o = document.createElement('option'); o.value = c; o.textContent = c; filter.appendChild(o);
+});
+
+function renderGrid(list){
+  const g = document.getElementById('recipes-grid'); g.innerHTML = '';
+  list.forEach((r, i)=>{
+    const card = document.createElement('div'); card.className='recipe-card';
+    card.innerHTML = `<img src="${r.img}" alt=""><h4>${r.title}</h4><p>${r.desc}</p><button data-id="${i}" class="open-btn">View</button>`;
+    g.appendChild(card);
+  });
+}
+renderGrid(recipes);
+
+document.getElementById('search').addEventListener('input', (e)=>{
+  const q = e.target.value.toLowerCase();
+  const cat = filter.value;
+  const f = recipes.filter(r=> r.title.toLowerCase().includes(q) && (cat? r.category===cat : true));
+  renderGrid(f);
+});
+filter.addEventListener('change', ()=> document.getElementById('search').dispatchEvent(new Event('input')));
+
+// Modal logic
+const modal = document.getElementById('modal');
+document.getElementById('recipes-grid').addEventListener('click', (e)=>{
+  if(e.target.classList.contains('open-btn')){
+    const id = +e.target.dataset.id; const r = recipes[id];
+    document.getElementById('modal-title').textContent = r.title;
+    document.getElementById('modal-img').src = r.img;
+    const ul = document.getElementById('modal-ingredients'); ul.innerHTML=''; r.ingredients.forEach(i=>{ const li=document.createElement('li'); li.textContent=i; ul.appendChild(li); });
+    const ol = document.getElementById('modal-steps'); ol.innerHTML=''; r.steps.forEach(s=>{ const li=document.createElement('li'); li.textContent=s; ol.appendChild(li); });
+    const tb = document.querySelector('#modal-nutrition tbody'); tb.innerHTML=''; Object.entries(r.nutrition).forEach(([k,v])=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td>${k}</td><td>${v}</td>`; tb.appendChild(tr); });
+    modal.classList.remove('hidden'); modal.setAttribute('aria-hidden','false');
+  }
+});
+document.getElementById('modal-close').addEventListener('click', ()=>{ modal.classList.add('hidden'); modal.setAttribute('aria-hidden','true'); });
+
+</script>
+</body>
+</html>

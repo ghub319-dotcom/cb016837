@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>🌿 GreenBite — Home</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2a9d8f">
+  <link rel="icon" href="favicon.png">
+</head>
+<body>
+  <header class="nav-wrap">
+    <div class="logo">🌱 GreenBite</div>
+    <nav id="nav">
+      <a href="index.html" class="active">🏠 Home</a>
+      <a href="recipes.html">🍲 Recipes</a>
+      <a href="calculator.html">📊 Calculator</a>
+      <a href="workouts.html">💪 Workouts</a>
+      <a href="mindfulness.html">🧘 Mindfulness</a>
+      <a href="contact.html">✉️ Contact</a>
+    </nav>
+    <button id="hamburger" class="hamburger" aria-label="menu">☰</button>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>🌿 Welcome to GreenBite 🌿</h1>
+      <p id="rotating-quote">🥗 Eat Clean. Live well.</p>
+      <div class="subscribe">
+        <input id="newsletter-email" type="email" placeholder="📧 Your email">
+        <button id="subscribe-btn">✅ Subscribe ✅</button>
+      </div>
+    </section>
+
+    <section class="featured">
+      <h2>💡 Health Tip of the Day</h2>
+      <p id="tip-of-day">Loading tip...</p>
+    </section>
+
+    <section class="links-grid">
+      <a class="card" href="recipes.html">🍎 Healthy Recipes</a>
+      <a class="card" href="calculator.html">🔥 Calorie Calculator</a>
+      <a class="card" href="workouts.html">🏋️ Workout Generator</a>
+      <a class="card" href="mindfulness.html">🌸 Mindfulness</a>
+    </section>
+  </main>
+
+  <footer>
+    <div>© GreenBite 2025 🌿 — <a href="contact.html">✉️ Contact</a></div>
+  </footer>
+
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script>
+// Home page specific scripts: rotating quotes and tip of the day
+const quotes = [
+  "🥗 Eat to nourish your body.",
+  "🚶 Move your body every day.",
+  "🌱 Small steps create big changes.",
+  "💧 Hydrate — it's that simple.",
+  "🧘 Mindfulness fuels a healthy life."
+];
+let qi = 0;
+function rotateQuote(){
+  document.getElementById('rotating-quote').textContent = quotes[qi];
+  qi = (qi+1) % quotes.length;
+}
+rotateQuote();
+setInterval(rotateQuote, 3500);
+
+// Tip of the day based on date
+function tipOfDay(){
+  const tips = [
+    "💧 Start your day with a glass of water.",
+    "🥦 Include a portion of vegetables with each meal.",
+    "🚶‍♂️ Take a 10-minute walk after lunch.",
+    "🍳 Add protein to breakfast to stay full longer.",
+    "😌 Practice 5 minutes of deep breathing."
+  ];
+  const d = new Date();
+  const idx = d.getDate() % tips.length;
+  document.getElementById('tip-of-day').textContent = tips[idx];
+}
+tipOfDay();
+
+// Newsletter store
+document.getElementById('subscribe-btn').addEventListener('click', ()=>{
+  const email = document.getElementById('newsletter-email').value.trim();
+  if(!email || !email.includes('@')) return alert('⚠️ Please enter a valid email.');
+  const emails = JSON.parse(localStorage.getItem('gb_news')||'[]');
+  emails.push({email, date: new Date().toISOString()});
+  localStorage.setItem('gb_news', JSON.stringify(emails));
+  alert('🎉 Thanks — subscription saved locally for your viva demo.');
+});
+</script>
+</body>
+</html>

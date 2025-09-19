@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GreenBite — Calculator</title><link rel="stylesheet" href="styles.css"></head><body>
+<header class="nav-wrap"><div class="logo">GreenBite</div><nav id="nav"><a href="index.html">Home</a><a href="recipes.html">Recipes</a><a href="calculator.html" class="active">Calculator</a><a href="workouts.html">Workouts</a><a href="mindfulness.html">Mindfulness</a><a href="contact.html">Contact</a></nav></header>
+<main class="container">
+  <h1>Calorie & Nutrition Calculator</h1>
+  <form id="calc-form" class="calc-form">
+    <label>Age <input id="age" type="number" min="10" required></label>
+    <label>Gender <select id="gender"><option value="male">Male</option><option value="female">Female</option></select></label>
+    <label>Height (cm) <input id="height" type="number" min="50" required></label>
+    <label>Weight (kg) <input id="weight" type="number" min="20" required></label>
+    <label>Activity level <select id="activity"><option value="1.2">Sedentary</option><option value="1.375">Lightly active</option><option value="1.55">Moderately active</option><option value="1.725">Very active</option><option value="1.9">Super active</option></select></label>
+    <button type="submit">Calculate</button>
+  </form>
+
+  <div id="results" class="results hidden">
+    <h2>Results</h2>
+    <p>BMR: <span id="bmr"></span> kcal/day</p>
+    <p>TDEE: <span id="tdee"></span> kcal/day</p>
+    <div class="macros">
+      <div>Carbs: <strong id="carbs-g"></strong> g</div>
+      <div>Protein: <strong id="protein-g"></strong> g</div>
+      <div>Fat: <strong id="fat-g"></strong> g</div>
+    </div>
+  </div>
+</main>
+<footer>© GreenBite</footer>
+<script src="common.js"></script>
+<script>
+document.getElementById('calc-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const age=+document.getElementById('age').value;
+  const gender=document.getElementById('gender').value;
+  const height=+document.getElementById('height').value;
+  const weight=+document.getElementById('weight').value;
+  const activity=+document.getElementById('activity').value;
+  if(!age||!height||!weight) return alert('Please fill all fields correctly.');
+  let bmr = 10*weight + 6.25*height - 5*age + (gender==='male'?5:-161);
+  const tdee = Math.round(bmr * activity);
+  // Macros using 50/20/30
+  const carbs_g = Math.round((tdee*0.5)/4);
+  const protein_g = Math.round((tdee*0.2)/4);
+  const fat_g = Math.round((tdee*0.3)/9);
+
+  document.getElementById('bmr').textContent = Math.round(bmr);
+  document.getElementById('tdee').textContent = tdee;
+  document.getElementById('carbs-g').textContent = carbs_g;
+  document.getElementById('protein-g').textContent = protein_g;
+  document.getElementById('fat-g').textContent = fat_g;
+  document.getElementById('results').classList.remove('hidden');
+
+  // Save last result to localStorage (reusable across pages)
+  saveToLocal('last_calc', {date: new Date().toISOString(), bmr: Math.round(bmr), tdee, carbs_g, protein_g, fat_g});
+});
+</script></body></html>
