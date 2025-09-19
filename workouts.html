@@ -1,89 +1,44 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GreenBite — Workouts</title><link rel="stylesheet" href="styles.css"></head><body>
-<header class="nav-wrap"><div class="logo">GreenBite</div><nav id="nav"><a href="index.html">Home</a><a href="recipes.html">Recipes</a><a href="calculator.html">Calculator</a><a href="workouts.html" class="active">Workouts</a><a href="mindfulness.html">Mindfulness</a><a href="contact.html">Contact</a></nav></header>
-<main class="container">
-  <h1>Workout Generator</h1>
-  <form id="workout-form">
-    <label>Body part <select id="bodypart"><option value="full">Full Body</option><option value="arms">Arms</option><option value="legs">Legs</option><option value="core">Core</option></select></label>
-    <label>Equipment <select id="equip"><option value="none">None</option><option value="dumbbells">Dumbbells</option><option value="band">Resistance Band</option></select></label>
-    <button type="button" id="gen-btn">Generate</button>
-  </form>
-
-  <div id="plan" class="plan hidden">
-    <h2>Your Plan</h2>
-    <ol id="ex-list"></ol>
-    <div id="timer-area" class="hidden">
-      <h3 id="current-ex"></h3>
-      <div id="countdown">00:00</div>
-      <button id="start-ex">Start</button>
-      <button id="next-ex" class="hidden">Next</button>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GreenBite — Workouts</title>
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="stylesheet" href="workouts.css">
+</head>
+<body>
+<header class="container nav">
+  <div class="brand"><div class="logo">GB</div></div>
+  <nav>
+    <div class="menu">
+      <a href="index.html">Home</a>
+      <a href="workouts.html">Workouts</a>
     </div>
+  </nav>
+</header>
+
+<main class="container">
+  <h2>Workout Generator</h2>
+  <div class="card" style="max-width:700px">
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+      <select id="bodypart">
+        <option value="full">Full Body</option>
+        <option value="arms">Arms</option>
+        <option value="legs">Legs</option>
+      </select>
+      <select id="equipment">
+        <option value="none">None</option>
+        <option value="dumbbells">Dumbbells</option>
+        <option value="kettlebells">Kettlebells</option>
+      </select>
+      <button class="btn" id="gen">Generate</button>
+    </div>
+    <div id="plan" style="margin-top:.8rem"></div>
   </div>
 </main>
-<footer>© GreenBite</footer>
-<script src="data.js"></script>
-<script src="common.js"></script>
-<script>
-function genWorkout(){
-  const bp = document.getElementById('bodypart').value;
-  const eq = document.getElementById('equip').value;
-  // filter workouts
-  const pool = workouts.filter(w=> (w.body===bp||bp==='full'&&w.body==='full') && (w.equipment==='any' || w.equipment===eq));
-  // choose 5 random
-  const chosen = [];
-  for(let i=0;i<5 && pool.length;i++){
-    const idx = Math.floor(Math.random()*pool.length);
-    chosen.push(pool[idx]);
-    pool.splice(idx,1);
-  }
-  const ol = document.getElementById('ex-list'); ol.innerHTML='';
-  chosen.forEach((c,i)=>{
-    const li = document.createElement('li');
-    li.innerHTML = `<strong>${c.name}</strong> — ${c.duration}s`;
-    li.dataset.duration = c.duration;
-    ol.appendChild(li);
-  });
-  document.getElementById('plan').classList.remove('hidden');
-  // store plan
-  saveToLocal('last_workout', {date:new Date().toISOString(), plan: chosen});
-}
 
-document.getElementById('gen-btn').addEventListener('click', genWorkout);
-
-// Timer functionality (simple)
-let timerInterval, currentIndex=0, currentList=[];
-document.getElementById('plan').addEventListener('click', (e)=>{
-  if(e.target.id==='start-ex') startExercise();
-});
-function startExercise(){
-  const items = document.querySelectorAll('#ex-list li');
-  currentList = Array.from(items);
-  if(!currentList.length) return;
-  currentIndex = 0;
-  document.getElementById('timer-area').classList.remove('hidden');
-  nextExercise();
-}
-function nextExercise(){
-  if(currentIndex >= currentList.length){
-    document.getElementById('current-ex').textContent = 'Done!';
-    document.getElementById('countdown').textContent = '00:00';
-    window.clearInterval(timerInterval);
-    return;
-  }
-  const li = currentList[currentIndex];
-  const name = li.querySelector('strong').textContent, dur = +li.dataset.duration;
-  document.getElementById('current-ex').textContent = name;
-  let t = dur;
-  document.getElementById('countdown').textContent = String(t).padStart(2,'0') + ':00'.slice(3);
-  // simple seconds countdown
-  window.clearInterval(timerInterval);
-  const display = document.getElementById('countdown');
-  timerInterval = setInterval(()=>{
-    if(t<=0){ clearInterval(timerInterval); currentIndex++; nextExercise(); return; }
-    t--;
-    display.textContent = String(t).padStart(2,'0') + ':00'.slice(3);
-  }, 1000);
-}
-
-document.getElementById('workout-form').addEventListener('submit', (e)=>e.preventDefault());
-</script>
-</body></html>
+<script src="scripts/common.js"></script>
+<script src="workouts.js"></script>
+</body>
+</html>
