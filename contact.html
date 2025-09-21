@@ -4,59 +4,86 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>GreenBite — Contact</title>
-  <link rel="icon" href="assets/favicon.png">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="container nav">
-  <div class="brand"><div class="logo">GB</div></div>
-  <nav>
-    <div class="menu">
-      <a href="index.html">Home</a>
-      <a href="contact.html">Contact</a>
-    </div>
+<header class="nav-wrap">
+  <div class="logo">GreenBite</div>
+  <nav id="nav">
+    <a href="index.html">Home</a>
+    <a href="recipes.html">Recipes</a>
+    <a href="calculator.html">Calculator</a>
+    <a href="workouts.html">Workouts</a>
+    <a href="mindfulness.html">Mindfulness</a>
+    <a href="contact.html" class="active">Contact</a>
   </nav>
 </header>
 
 <main class="container">
-  <h2>Contact & Feedback</h2>
-  <div class="card contact-card">
-    <form id="contact-form">
-      <div class="contact-inputs">
-        <input id="name" placeholder="Your name" required>
-        <input id="email" placeholder="Email" required>
-      </div>
-      <textarea id="message" placeholder="Message" rows="5" required></textarea>
-      <div class="contact-buttons">
-        <button class="btn" type="submit">Send</button>
-        <button type="reset">Reset</button>
-      </div>
-    </form>
+  <h1>Contact & Feedback</h1>
+  <form id="contact-form">
+    <label>Name <input id="c-name" required></label><br><br>
+    <label>Email <input id="c-email" type="email" required></label><br><br>
+    <label>Message <textarea id="c-msg" required></textarea></label><br><br>
+    <button type="submit">Send</button>
+  </form>
+  <div id="confirm" class="hidden"></div>
 
-    <h3>FAQ</h3>
-    <div id="faq">
-      <div class="card">
-        <strong>How do I save recipes?</strong>
-        <div class="small">Open a recipe and click Save — it stores in localStorage.</div>
-      </div>
-      <div class="card">
-        <strong>Can I use this offline?</strong>
-        <div class="small">Yes — basic caching via a simple service worker (PWA).</div>
-      </div>
+  <h2>FAQ</h2>
+  <div class="accordion">
+    <div class="item">
+      <button class="acc-btn">How do I save a recipe?</button>
+      <div class="acc-panel">Use the save buttons (demo uses localStorage).</div>
     </div>
+    <div class="item">
+      <button class="acc-btn">Is my data sent anywhere?</button>
+      <div class="acc-panel">No — this demo stores data in your browser localStorage.</div>
+    </div>
+  </div>
 
-    <!-- Map Section -->
-    <h3>Our Location</h3>
-    <div id="map">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019500688301!2d-122.41941548468164!3d37.77492977975978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858064c6a2d5b9%3A0x5f1f4e7f1c0e6f0a!2sSan+Francisco%2C+CA!5e0!3m2!1sen!2sus!4v1695150000000!5m2!1sen!2sus"
-        allowfullscreen="" loading="lazy">
-      </iframe>
-    </div>
+  <h2>GreenBite HQ</h2>
+  <!-- Embedded Google Map of Sri Lanka -->
+  <div class="map-placeholder">
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15843.33462198383!2d79.861243!3d6.927079!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae259254f1d2d8f%3A0x9c5e4c6a2b04c7d6!2sColombo%2C%20Sri%20Lanka!5e0!3m2!1sen!2slk!4v1695113173000!5m2!1sen!2slk" 
+      width="100%" 
+      height="300" 
+      style="border:0; border-radius:8px;" 
+      allowfullscreen="" 
+      loading="lazy" 
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
   </div>
 </main>
 
-<script src="scripts/common.js"></script>
-<script src="scripts/contact.js" defer></script>
+<footer>© GreenBite</footer>
+
+<script src="common.js"></script>
+<script>
+document.getElementById('contact-form').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const name = document.getElementById('c-name').value.trim();
+  const email = document.getElementById('c-email').value.trim();
+  const msg = document.getElementById('c-msg').value.trim();
+  if(!name || !email || !msg) return alert('Please fill all fields.');
+  
+  const fb = JSON.parse(localStorage.getItem('gb_feedback')||'[]');
+  fb.push({name,email,msg,date:new Date().toISOString()});
+  localStorage.setItem('gb_feedback', JSON.stringify(fb));
+  
+  document.getElementById('confirm').classList.remove('hidden');
+  document.getElementById('confirm').textContent = '✅ Thank you — your feedback is saved locally (for viva).';
+  document.getElementById('contact-form').reset();
+});
+
+// Accordion
+document.querySelectorAll('.acc-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    btn.classList.toggle('open');
+    const p = btn.nextElementSibling;
+    p.style.display = p.style.display==='block' ? 'none' : 'block';
+  });
+});
+</script>
 </body>
 </html>
