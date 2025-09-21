@@ -8,6 +8,52 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#2a9d8f">
   <link rel="icon" href="favicon.png">
+  <style>
+    /* Big letters for headings */
+    h1 {
+      font-size: 3rem;
+      text-align: center;
+      color: #2a9d8f;
+    }
+    h2 {
+      font-size: 2rem;
+      color: #264653;
+    }
+
+    /* Nice bar (navigation) */
+    .nav-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #2a9d8f, #21867a);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      color: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .nav-wrap .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+    #nav a {
+      margin: 0 0.5rem;
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+    }
+    #nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Time display */
+    #clock {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-left: 1rem;
+    }
+  </style>
 </head>
 <body>
   <header class="nav-wrap">
@@ -20,7 +66,7 @@
       <a href="mindfulness.html">🧘 Mindfulness</a>
       <a href="contact.html">✉️ Contact</a>
     </nav>
-    <button id="hamburger" class="hamburger" aria-label="menu">☰</button>
+    <div id="clock">--:--:--</div>
   </header>
 
   <main class="container">
@@ -50,8 +96,8 @@
     <div>© GreenBite 2025 🌿 — <a href="contact.html">✉️ Contact</a></div>
   </footer>
 
-<script src="data.js"></script>
-<script src="common.js"></script>
+<script src="data.js" defer></script>
+<script src="common.js" defer></script>
 <script>
 // Home page specific scripts: rotating quotes and tip of the day
 const quotes = [
@@ -89,10 +135,20 @@ document.getElementById('subscribe-btn').addEventListener('click', ()=>{
   const email = document.getElementById('newsletter-email').value.trim();
   if(!email || !email.includes('@')) return alert('⚠️ Please enter a valid email.');
   const emails = JSON.parse(localStorage.getItem('gb_news')||'[]');
+  if(emails.some(e => e.email === email)) return alert('✅ You are already subscribed!');
   emails.push({email, date: new Date().toISOString()});
   localStorage.setItem('gb_news', JSON.stringify(emails));
   alert('🎉 Thanks — subscription saved locally for your viva demo.');
 });
+
+// Live clock
+function updateClock(){
+  const now = new Date();
+  document.getElementById('clock').textContent =
+    now.toLocaleTimeString();
+}
+setInterval(updateClock, 1000);
+updateClock();
 </script>
 </body>
 </html>
