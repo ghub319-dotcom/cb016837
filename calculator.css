@@ -1,40 +1,41 @@
-/* Recipes Page Specific Styles */
+/* Calculator Page Specific Styles */
 main {
-  font-size: 1.25em;
+  font-size: 1.2em;
 }
 h2 {
-  font-size: 2.5em;
+  font-size: 2.2em;
   color: #0a680d;
   margin-bottom: 0.5em;
   letter-spacing: 1px;
   text-align: center;
 }
-.recipe-images-row {
+.macros-row {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 40px;
+  gap: 32px;
   margin-bottom: 24px;
   flex-wrap: wrap;
 }
-.recipe-images-row img {
-  width: 80px;
-  border-radius: 16px;
-  box-shadow: 0 2px 12px #0a680d22;
-}
-input#search, select#filter, button#clear {
-  font-size: 1.3em;
-  padding: 10px 16px;
+.macros-row img {
+  width: 70px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px #0a680d22;
   margin-bottom: 8px;
-}
-#recipes {
-  font-size: 1.25em;
 }
 .card {
   background: #f6fff6;
   border-radius: 16px;
   box-shadow: 0 2px 8px #0a680d22;
-  padding: 24px 18px;
+  padding: 28px 20px;
   margin: 0 auto 18px auto;
   max-width: 600px;
+}
+input, select, button {
+  font-size: 1.1em;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+}
+#results {
+  font-size: 1.15em;
 }

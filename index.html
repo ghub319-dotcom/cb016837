@@ -1,154 +1,140 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>🌿 GreenBite — Home</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#2a9d8f">
-  <link rel="icon" href="favicon.png">
-  <style>
-    /* Big letters for headings */
-    h1 {
-      font-size: 3rem;
-      text-align: center;
-      color: #2a9d8f;
-    }
-    h2 {
-      font-size: 2rem;
-      color: #264653;
-    }
-
-    /* Nice bar (navigation) */
-    .nav-wrap {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(90deg, #2a9d8f, #21867a);
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      color: white;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    .nav-wrap .logo {
-      font-weight: bold;
-      font-size: 1.5rem;
-    }
-    #nav a {
-      margin: 0 0.5rem;
-      text-decoration: none;
-      color: white;
-      font-weight: 500;
-    }
-    #nav a:hover {
-      text-decoration: underline;
-    }
-
-    /* Time display */
-    #clock {
-      font-size: 1.2rem;
-      font-weight: bold;
-      margin-left: 1rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenBite - Home</title>
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <header class="nav-wrap">
-    <div class="logo">🌱 GreenBite</div>
-    <nav id="nav">
-      <a href="index.html" class="active">🏠 Home</a>
-      <a href="recipes.html">🍲 Recipes</a>
-      <a href="calculator.html">📊 Calculator</a>
-      <a href="workouts.html">💪 Workouts</a>
-      <a href="mindfulness.html">🧘 Mindfulness</a>
-      <a href="contact.html">✉️ Contact</a>
+    <nav>
+        <div class="logo">GreenBite🌏</div>
+        <div>
+            <a href="index.html">Home🏠</a>
+            <a href="recipes.html">Recipes🍽️</a>
+            <a href="calculator.html">Calculator🧮</a>
+            <a href="workouts.html">Workouts🏋️‍♂️</a>
+            <a href="mindfulness.html">Mindfulness🧘‍♀️</a>
+            <a href="contact.html">Contact📞</a>
+        </div>
     </nav>
-    <div id="clock">--:--:--</div>
-  </header>
+            <div style="text-align:right;font-size:1.1em;margin:8px 0 0 0;">
+                <span id="clock"></span>
+            </div>
+            <section class="hero" style="background-image: url('assets/workout.jpg'); background-size: cover; background-position: center; color: #fff; position: relative; min-height: 350px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div class="hero-overlay" style="background: rgba(34, 139, 34, 0.6); position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
+            <div style="position: relative; z-index: 2; text-align: center;">
+                <h1>Welcome to GreenBite 💚</h1>
+                <div id="slogan" style="font-size: 1.5em; margin: 15px 0;"></div>
+                <p>Your wellness journey starts here.✨</p>
+                <button class="btn">Get Started🏃</button>
+            </div>
+        </section>
+        <section class="about-greenbite" style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; margin: 40px 0;">
+            <div class="about-block" style="flex: 1; min-width: 250px; max-width: 350px; background: #f6fff6; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 24px; text-align: center;">
+                <img src="assets/v-icon.png" alt="Balanced Meals" style="width: 80px; margin-bottom: 12px;">
+                <h2>Balanced Meals</h2>
+                <p>Discover delicious recipes and nutrition tips to fuel your body and mind. GreenBite promotes a variety of healthy eating styles, from vegan to high-protein, ensuring every meal is a step toward wellness.</p>
+            </div>
+            <div class="about-block" style="flex: 1; min-width: 250px; max-width: 350px; background: #f6fff6; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 24px; text-align: center;">
+                <img src="assets/w.jpg" alt="Exercise" style="width: 80px; border-radius: 50%; margin-bottom: 12px;">
+                <h2>Exercise</h2>
+                <p>Stay active with our workout generator and fitness tips. Whether you prefer home workouts or gym routines, GreenBite helps you build strength, flexibility, and endurance for a healthier lifestyle.</p>
+            </div>
+            <div class="about-block" style="flex: 1; min-width: 250px; max-width: 350px; background: #f6fff6; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 24px; text-align: center;">
+                <img src="assets/q.png" alt="Mindfulness" style="width: 80px; margin-bottom: 12px;">
+                <h2>Mindfulness</h2>
+                <p>Practice guided breathing, meditation, and mindful living. GreenBite offers tools and resources to help you reduce stress, improve focus, and nurture your mental well-being every day.</p>
+            </div>
+        </section>
+        <section class="health-tips" style="background: #e6ffe6; padding: 32px 0; text-align: center;">
+            <h2>Health Tip of the Day</h2>
+            <div id="health-tip" style="font-size: 1.2em; margin-top: 12px;"></div>
+        </section>
+    <footer style="background: #222; color: #fff; padding: 24px 0; text-align: center;">
+        <div style="margin-bottom: 12px;">
+            <a href="recipes.html" style="color: #90ee90; margin: 0 10px;">Recipes</a>
+            <a href="calculator.html" style="color: #90ee90; margin: 0 10px;">Calculator</a>
+            <a href="workouts.html" style="color: #90ee90; margin: 0 10px;">Workouts</a>
+            <a href="mindfulness.html" style="color: #90ee90; margin: 0 10px;">Mindfulness</a>
+            <a href="contact.html" style="color: #90ee90; margin: 0 10px;">Contact</a>
+        </div>
+        <form id="newsletter-form" style="margin-bottom: 12px;">
+            <input type="email" id="newsletter-email" placeholder="Subscribe to our newsletter" required style="padding: 8px; border-radius: 4px; border: none;">
+            <button type="submit" style="padding: 8px 16px; border-radius: 4px; background: #90ee90; color: #222; border: none; cursor: pointer;">Subscribe</button>
+        </form>
+        <div id="newsletter-msg" style="margin-bottom: 8px;"></div>
+        <p>&copy; 2025 GreenBite - Healthy Lifestyle 👫</p>
+    </footer>
+        <script src="scripts/common.js"></script>
+        <script>
 
-  <main class="container">
-    <section class="hero">
-      <h1>🌿 Welcome to GreenBite 🌿</h1>
-      <p id="rotating-quote">🥗 Eat Clean. Live well.</p>
-      <div class="subscribe">
-        <input id="newsletter-email" type="email" placeholder="📧 Your email">
-        <button id="subscribe-btn">✅ Subscribe ✅</button>
-      </div>
-    </section>
 
-    <section class="featured">
-      <h2>💡 Health Tip of the Day</h2>
-      <p id="tip-of-day">Loading tip...</p>
-    </section>
 
-    <section class="links-grid">
-      <a class="card" href="recipes.html">🍎 Healthy Recipes</a>
-      <a class="card" href="calculator.html">🔥 Calorie Calculator</a>
-      <a class="card" href="workouts.html">🏋️ Workout Generator</a>
-      <a class="card" href="mindfulness.html">🌸 Mindfulness</a>
-    </section>
-  </main>
+        // Live clock
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2,'0');
+            const m = String(now.getMinutes()).padStart(2,'0');
+            const s = String(now.getSeconds()).padStart(2,'0');
+            document.getElementById('clock').textContent = `${h}:${m}:${s}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
 
-  <footer>
-    <div>© GreenBite 2025 🌿 — <a href="contact.html">✉️ Contact</a></div>
-  </footer>
 
-<script src="data.js" defer></script>
-<script src="common.js" defer></script>
-<script>
-// Home page specific scripts: rotating quotes and tip of the day
-const quotes = [
-  "🥗 Eat to nourish your body.",
-  "🚶 Move your body every day.",
-  "🌱 Small steps create big changes.",
-  "💧 Hydrate — it's that simple.",
-  "🧘 Mindfulness fuels a healthy life."
-];
-let qi = 0;
-function rotateQuote(){
-  document.getElementById('rotating-quote').textContent = quotes[qi];
-  qi = (qi+1) % quotes.length;
-}
-rotateQuote();
-setInterval(rotateQuote, 3500);
+    // Rotating slogans
+    const slogans = [
+        "Eat well, live well!",
+        "Strong body, calm mind.",
+        "Small steps, big changes.",
+        "Nourish to flourish.",
+        "Wellness is a journey, not a destination."
 
-// Tip of the day based on date
-function tipOfDay(){
-  const tips = [
-    "💧 Start your day with a glass of water.",
-    "🥦 Include a portion of vegetables with each meal.",
-    "🚶‍♂️ Take a 10-minute walk after lunch.",
-    "🍳 Add protein to breakfast to stay full longer.",
-    "😌 Practice 5 minutes of deep breathing."
-  ];
-  const d = new Date();
-  const idx = d.getDate() % tips.length;
-  document.getElementById('tip-of-day').textContent = tips[idx];
-}
-tipOfDay();
+    ];
+    let sloganIdx = 0;
+    function showSlogan() {
+        document.getElementById('slogan').textContent = slogans[sloganIdx];
+        sloganIdx = (sloganIdx + 1) % slogans.length;
 
-// Newsletter store
-document.getElementById('subscribe-btn').addEventListener('click', ()=>{
-  const email = document.getElementById('newsletter-email').value.trim();
-  if(!email || !email.includes('@')) return alert('⚠️ Please enter a valid email.');
-  const emails = JSON.parse(localStorage.getItem('gb_news')||'[]');
-  if(emails.some(e => e.email === email)) return alert('✅ You are already subscribed!');
-  emails.push({email, date: new Date().toISOString()});
-  localStorage.setItem('gb_news', JSON.stringify(emails));
-  alert('🎉 Thanks — subscription saved locally for your viva demo.');
-});
+    }
+    setInterval(showSlogan, 3000);
+    showSlogan();
 
-// Live clock
-function updateClock(){
-  const now = new Date();
-  document.getElementById('clock').textContent =
-    now.toLocaleTimeString();
-}
-setInterval(updateClock, 1000);
-updateClock();
-</script>
+
+
+    // Health tip of the day (date-based)
+    const healthTips = [
+        "Drink plenty of water today!",
+        "Take a brisk walk for 20 minutes.",
+        "Try a new vegetable in your meal.",
+        "Practice deep breathing for 5 minutes.",
+        "Get enough sleep for better recovery.",
+        "Stretch your body after sitting long hours.",
+        "Smile and practice gratitude."
+    ];
+    
+    const today = new Date();
+    const tipIdx = today.getDate() % healthTips.length;
+    document.getElementById('health-tip').textContent = healthTips[tipIdx];
+
+
+    // Newsletter subscription
+    document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('newsletter-email').value;
+        if(email && email.includes('@')) {
+            localStorage.setItem('greenbite_newsletter', email);
+            document.getElementById('newsletter-msg').textContent = "Thank you for subscribing!";
+            document.getElementById('newsletter-email').value = '';
+        } else {
+            document.getElementById('newsletter-msg').textContent = "Please enter a valid email address.";
+        }
+    });
+    </script>
 </body>
-</html>
+</html> 
+
+
+
+
