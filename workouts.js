@@ -1,5 +1,5 @@
 // ==========================
-// Live clock
+// Live Clock
 // ==========================
 function updateClock() {
   const now = new Date();
@@ -13,71 +13,68 @@ updateClock();
 
 
 // ==========================
-// Exercises by body part
+// Workout Generation
 // ==========================
-const EXERCISES = {
-  full: ['Jumping Jacks','Burpees','Mountain Climbers','Plank (30s)'],
-  arms: ['Push-ups','Tricep Dips','Bicep Curls'],
-  legs: ['Squats','Lunges','Calf Raises']
-};
-
-
-// ==========================
-// Generate workout plan
-// ==========================
-document.getElementById('gen').addEventListener('click', () => {
+function genWorkout(){
   const bp = document.getElementById('bodypart').value;
-  const eq = document.getElementById('equipment').value; // currently unused but available
-  const pool = EXERCISES[bp] || EXERCISES.full;
-
-  const plan = [];
-  for (let i = 0; i < 4; i++) {
-    plan.push(pool[Math.floor(Math.random() * pool.length)]);
+  const eq = document.getElementById('equip').value;
+  const pool = workouts.filter(w=> (w.body===bp||bp==='full'&&w.body==='full') && (w.equipment==='any' || w.equipment===eq));
+  const chosen = [];
+  for(let i=0;i<5 && pool.length;i++){
+    const idx = Math.floor(Math.random()*pool.length);
+    chosen.push(pool[idx]);
+    pool.splice(idx,1);
   }
+  const ol = document.getElementById('ex-list'); ol.innerHTML='';
+  chosen.forEach(c=>{
+    const li = document.createElement('li');
+    li.innerHTML = `<strong>${c.name}</strong> — ${c.duration}s`;
+    li.dataset.duration = c.duration;
+    ol.appendChild(li);
+  });
+  document.getElementById('plan').classList.remove('hidden');
+  saveToLocal('last_workout', {date:new Date().toISOString(), plan: chosen});
+}
 
-  const html = plan.map((ex, i) => `
-    <div class="card" style="margin-top:.4rem">
-      <strong>${ex}</strong>
-      <div style="margin-top:.4rem">
-        Time: <span id="t_${i}">30</span>s
-        <button onclick="startTimer(${i},30)">Start</button>
-      </div>
-    </div>
-  `).join('');
-
-  document.getElementById('plan').innerHTML = html;
-});
+document.getElementById('gen-btn').addEventListener('click', genWorkout);
 
 
 // ==========================
-// Countdown timer
+// Timer Functionality
 // ==========================
-function startTimer(i, sec) {
-  const el = document.getElementById('t_' + i);
-  let s = sec;
-  const iv = setInterval(() => {
-    s--;
-    el.textContent = s;
-    if (s <= 0) {
-      clearInterval(iv);
-      el.textContent = 'Done';
-      playBeep();
-    }
+let timerInterval, currentIndex=0, currentList=[];
+
+document.getElementById('start-ex').addEventListener('click', startExercise);
+
+function startExercise(){
+  const items = document.querySelectorAll('#ex-list li');
+  currentList = Array.from(items);
+  if(!currentList.length) return;
+  currentIndex = 0;
+  document.getElementById('timer-area').classList.remove('hidden');
+  nextExercise();
+}
+
+function nextExercise(){
+  if(currentIndex >= currentList.length){
+    document.getElementById('current-ex').textContent = 'Done!';
+    document.getElementById('countdown').textContent = '00:00';
+    window.clearInterval(timerInterval);
+    return;
+  }
+  const li = currentList[currentIndex];
+  const name = li.querySelector('strong').textContent, dur = +li.dataset.duration;
+  document.getElementById('current-ex').textContent = name;
+  let t = dur;
+  const display = document.getElementById('countdown');
+  display.textContent = t.toString().padStart(2,'0') + ':00'.slice(3);
+
+  window.clearInterval(timerInterval);
+  timerInterval = setInterval(()=>{
+    if(t<=0){ clearInterval(timerInterval); currentIndex++; nextExercise(); return; }
+    t--;
+    display.textContent = t.toString().padStart(2,'0') + ':00'.slice(3);
   }, 1000);
 }
 
-
-// ==========================
-// Beep sound
-// ==========================
-function playBeep() {
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    osc.connect(ctx.destination);
-    osc.start();
-    setTimeout(() => osc.stop(), 120);
-  } catch (e) {
-    console.warn('Beep not supported', e);
-  }
-}
+document.getElementById('workout-form').addEventListener('submit', (e)=>e.preventDefault());

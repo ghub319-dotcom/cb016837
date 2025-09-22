@@ -13,95 +13,37 @@ updateClock();
 
 
 // ==========================
-// Elements
+// Breathing animation
 // ==========================
-const breathEl = document.getElementById("breath"),
-      txt      = document.getElementById("breathText"),
-      msg      = document.getElementById("sessionMsg"),
-      btn      = document.getElementById("soundToggle"),
-      audio    = new Audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
+let iv;
+const rect = document.getElementById('rect');
+const steps = ['Inhale','Hold','Exhale','Hold'];
+const scales = ['scale(1)','scale(1.3)','scale(1)','scale(0.8)'];
+let idx = 0;
 
-audio.loop = true;
-audio.volume = 0.2;
-
-
-// ==========================
-// Breathing cycle steps
-// ==========================
-let idx = 0, timer, bSound = false, cycleNum = 0;
-const steps = [
-  {t:4000, p:"Inhale", c:"inhale"},
-  {t:2000, p:"Hold",   c:""},
-  {t:4000, p:"Exhale", c:"exhale"},
-  {t:2000, p:"Hold",   c:""}
-];
-
-
-// ==========================
-// Breathing cycle
-// ==========================
-function cycle() {
-  const s = steps[idx];
-  breathEl.className = "breath " + s.c;
-  txt.textContent = s.p;
-
-  if (idx === 0) {
-    cycleNum++;
-    document.getElementById('cycleCount').textContent = `Cycle: ${cycleNum}`;
-  }
-
-  idx = (idx + 1) % steps.length;
-  timer = setTimeout(cycle, s.t);
-}
-
-function startBreathing() {
-  cycleNum = 0;
-  document.getElementById('cycleCount').textContent = `Cycle: 0`;
+document.getElementById('start-breath').addEventListener('click', () => {
   idx = 0;
-  cycle();
+  iv = setInterval(() => {
+    rect.textContent = steps[idx];
+    rect.style.transform = scales[idx];
+    idx = (idx + 1) % steps.length;
+  }, 3000);
+});
+
+document.getElementById('stop-breath').addEventListener('click', () => {
+  clearInterval(iv);
+  rect.textContent = 'Breathe';
+  rect.style.transform = 'scale(1)';
+});
+
+
+// ==========================
+// Calm music toggle
+// ==========================
+function toggleMusic(id) {
+  const audio = document.getElementById(id);
+  audio.paused ? audio.play() : audio.pause();
 }
 
-function stopBreathing() {
-  clearTimeout(timer);
-  idx = 0;
-  breathEl.className = "breath";
-  txt.textContent = "";
-  document.getElementById('cycleCount').textContent = `Cycle: 0`;
-}
-
-
-// ==========================
-// Timer session
-// ==========================
-function startTimer() {
-  let secs = (+document.getElementById("minInput").value || 1) * 60;
-  msg.textContent = "Session running...";
-  const id = setInterval(()=>{
-    if (--secs <= 0) {
-      clearInterval(id);
-      msg.textContent = "Session complete!";
-      track();
-    }
-  },1000);
-}
-
-
-// ==========================
-// Ambient sound toggle
-// ==========================
-function toggleSound() {
-  bSound ? audio.pause() : audio.play();
-  bSound = !bSound;
-  btn.textContent = bSound ? "Stop Ambient" : "Toggle Ambient";
-}
-
-
-// ==========================
-// Local storage tracker
-// ==========================
-function track() {
-  let k = "green_sessions",
-      a = JSON.parse(localStorage[k] || "[]");
-  a.push({when:new Date().toISOString()});
-  localStorage[k] = JSON.stringify(a);
-}
+document.getElementById('toggle-nature').addEventListener('click', () => toggleMusic('nature'));
+document.getElementById('toggle-piano').addEventListener('click', () => toggleMusic('piano'));

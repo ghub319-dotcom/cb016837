@@ -1,52 +1,68 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>GreenBite — Recipes</title>
-  <link rel="stylesheet" href="main.css">
-  <link rel="stylesheet" href="recipes.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>GreenBite — Recipes</title>
+<link rel="stylesheet" href="main.css">
+<link rel="icon" href="favicon.png">
 </head>
 <body>
-<header>
-  <nav>
+
+<header class="nav-wrap">
+  <div class="logo">GreenBite</div>
+  <nav id="nav">
     <a href="index.html">Home</a>
-    <a href="recipes.html">Recipes</a>
+    <a href="recipes.html" class="active">Recipes</a>
     <a href="calculator.html">Calculator</a>
+    <a href="workouts.html">Workouts</a>
+    <a href="mindfulness.html">Mindfulness</a>
+    <a href="contact.html">Contact</a>
   </nav>
+  <button id="hamburger2" class="hamburger">☰</button>
 </header>
 
-<div style="text-align:right;font-size:1.1em;margin-bottom:8px;">
-  <span id="clock"></span>
-</div>
+<main class="container">
+  <h1>Healthy Recipes</h1>
 
-<main>
-  <h2 style="font-size:2.5em;color:#0a680d;margin-bottom:0.5em;letter-spacing:1px;text-align:center;">Healthy Recipes</h2>
-  
-  <div style="display:flex;justify-content:center;align-items:center;gap:40px;margin-bottom:24px;flex-wrap:wrap;">
-    <img src="assets/vegan-icon.png" alt="Vegetarian" style="width:80px;">
-    <img src="assets/fat.png" alt="Meat" style="width:80px;border-radius:16px;box-shadow:0 2px 12px #0a680d22;">
-    <img src="assets/sm.png" alt="Smoothie" style="width:80px;border-radius:16px;box-shadow:0 2px 12px #0a680d22;">
-    <img src="assets/carbs.png" alt="Vegan" style="width:80px;">
+  <div class="recipe-images-banner" style="display:flex;gap:1.5em;justify-content:center;align-items:center;margin-bottom:1.5em;flex-wrap:wrap;">
+    <img src="assets/balance.jpg" alt="Balanced Meal" style="width:110px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+    <img src="assets/Energizing Workouts.jpg" alt="Workout" style="width:110px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+    <img src="assets/Mindful Living.jpg" alt="Mindfulness" style="width:110px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
   </div>
 
-  <input id="search" placeholder="Search by name" style="font-size:1.3em;padding:10px 16px;margin-bottom:8px;">
-  <select id="filter" style="font-size:1.2em;padding:8px 12px;">
-    <option value="">All</option>
-    <option>Vegetarian</option>
-    <option>Meat</option>
-    <option>Vegan</option>
-  </select>
-  <button id="clear" style="font-size:1.1em;padding:8px 16px;">Clear</button>
+  <div class="controls">
+    <input id="search" placeholder="Search by name...">
+    <select id="filter-cat">
+      <option value="">All</option>
+    </select>
+  </div>
 
-  <div id="recipes" style="font-size:1.25em;"></div>
+  <div id="recipes-grid" class="grid"></div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal hidden" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+      <button id="modal-close" class="close">✕</button>
+      <h2 id="modal-title"></h2>
+      <img id="modal-img" src="" alt="" style="max-width:100%;border-radius:8px">
+      <h3>Ingredients</h3>
+      <ul id="modal-ingredients"></ul>
+      <h3>Steps</h3>
+      <ol id="modal-steps"></ol>
+      <h3>Nutrition</h3>
+      <table id="modal-nutrition" class="nutrition-table">
+        <thead><tr><th>Nutrient</th><th>Amount</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
 </main>
 
-<div id="modal" class="hidden" onclick="if(event.target.id==='modal') modal.classList.add('hidden')">
-  <div id="modal-inner"></div>
-</div>
+<footer>© GreenBite</footer>
 
-<!-- 🔗 External JavaScript -->
+<script src="data.js"></script>
+<script src="common.js"></script>
 <script src="recipes.js"></script>
 </body>
 </html>

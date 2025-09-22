@@ -4,56 +4,94 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GreenBite — Workouts</title>
-<link rel="icon" href="assets/favicon.png">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="main.css">
+<style>
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin-top: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  .video-container iframe {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+  }
+</style>
 </head>
 <body>
-<header class="container nav">
-  <div class="brand"><div class="logo">GB</div></div>
-  <nav>
-    <div class="menu">
-      <a href="index.html">Home</a>
-      <a href="workouts.html">Workouts</a>
-    </div>
+
+<header class="nav-wrap">
+  <div class="logo">GreenBite</div>
+  <nav id="nav">
+    <a href="index.html">Home</a>
+    <a href="recipes.html">Recipes</a>
+    <a href="calculator.html">Calculator</a>
+    <a href="workouts.html" class="active">Workouts</a>
+    <a href="mindfulness.html">Mindfulness</a>
+    <a href="contact.html">Contact</a>
   </nav>
 </header>
 
-<main class="container">
-  <!-- Live clock -->
-  <div style="text-align:right;font-size:1.1em;margin-bottom:8px;">
-    <span id="clock"></span>
-  </div>
+<div style="text-align:right;font-size:1.1em;margin-bottom:8px;">
+  <span id="clock"></span>
+</div>
 
-  <h2>Workout Generator</h2>
-  <div class="card" style="max-width:700px">
-    <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+<main class="container">
+  <h1>Workout Generator</h1>
+
+  <form id="workout-form">
+    <label>Body part 
       <select id="bodypart">
         <option value="full">Full Body</option>
         <option value="arms">Arms</option>
         <option value="legs">Legs</option>
+        <option value="core">Core</option>
       </select>
-      <select id="equipment">
+    </label>
+    <label>Equipment 
+      <select id="equip">
         <option value="none">None</option>
         <option value="dumbbells">Dumbbells</option>
-        <option value="kettlebells">Kettlebells</option>
+        <option value="band">Resistance Band</option>
       </select>
-      <button class="btn" id="gen">Generate</button>
-    </div>
+    </label>
+    <button type="button" id="gen-btn">Generate</button>
+  </form>
 
-    <!-- Generated workout plan -->
-    <div id="plan" style="margin-top:.8rem"></div>
+  <!-- Workout Video Section -->
+  <h2>Workout Video Guide</h2>
+  <div class="video-container">
+    <iframe 
+      src="https://www.youtube.com/embed/U9ENCvFf9yQ"
+      title="Workout Video"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
 
-    <!-- Workout photo -->
-    <h3 style="margin-top:1.5rem">Workout Session</h3>
-    <div style="margin-top:.5rem;text-align:center">
-      <img src="assets/wk.jpg" alt="Workout Session"
-           style="max-width:100%;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2)">
+  <div id="plan" class="plan hidden">
+    <h2>Your Plan</h2>
+    <ol id="ex-list"></ol>
+    <div id="timer-area" class="hidden">
+      <h3 id="current-ex"></h3>
+      <div id="countdown">00:00</div>
+      <button id="start-ex">Start</button>
     </div>
   </div>
 </main>
 
-<!-- Scripts -->
-<script src="scripts/common.js"></script>
+<footer>© GreenBite</footer>
+
+<script src="data.js"></script>
+<script src="common.js"></script>
 <script src="workouts.js"></script>
+
 </body>
 </html>

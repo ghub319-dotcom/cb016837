@@ -4,7 +4,7 @@ const recipes = [
   {
     title: "Quinoa Salad",
     category: "Salad",
-    img: "https://via.placeholder.com/600x400?text=Quinoa+Salad",
+    img: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fkristineskitchenblog.com%2Fsouthwest-quinoa-salad%2F&psig=AOvVaw00ZjvVLq_3ZMyYVJl4ZdyB&ust=1758545788903000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCNC379rz6Y8DFQAAAAAdAAAAABAL",
     desc: "Fresh quinoa salad with veggies.",
     ingredients: ["1 cup cooked quinoa","Tomato","Cucumber","Olive oil","Lemon"],
     steps: ["Cook quinoa","Chop vegetables","Mix with oil and lemon","Serve chilled"],
@@ -13,7 +13,7 @@ const recipes = [
   {
     title: "Oats Porridge",
     category: "Breakfast",
-    img: "https://via.placeholder.com/600x400?text=Oats+Porridge",
+    img: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.throughthefibrofog.com%2Foat-milk-porridge%2F&psig=AOvVaw34974-q5ctaD68LpfmrD7u&ust=1758545744414000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCKic-cTz6Y8DFQAAAAAdAAAAABAE",
     desc: "Warm oats with milk and fruit.",
     ingredients: ["1/2 cup oats","Milk or water","Banana","Honey"],
     steps: ["Boil milk","Add oats and simmer","Top with banana and honey"],
@@ -22,7 +22,7 @@ const recipes = [
   {
     title: "Grilled Veg Wrap",
     category: "Lunch",
-    img: "https://via.placeholder.com/600x400?text=Veg+Wrap",
+    img: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdiabetesstrong.com%2Fgrilled-veggie-wraps%2F&psig=AOvVaw3vW5jpYEU3y0WtuJXW1eUI&ust=1758545701138000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIi0-bDz6Y8DFQAAAAAdAAAAABAE",
     desc: "Quick grilled vegetable wrap.",
     ingredients: ["Tortilla","Grilled veggies","Hummus"],
     steps: ["Grill veggies","Spread hummus","Assemble and roll"],
